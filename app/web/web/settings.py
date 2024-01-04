@@ -1,5 +1,6 @@
 from pathlib import Path
 from dotenv import dotenv_values
+import os
 
 dotenv_variables = {
     **dotenv_values()
@@ -25,6 +26,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mptt',
+    'workers',
+    
 ]
 
 MIDDLEWARE = [
@@ -39,10 +43,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'web.urls'
 
+ТЕМРLАТЕ_DIR = os.path.join(BASE_DIR, "templates")
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ТЕМРLАТЕ_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,3 +119,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+LOGIN_REDIRECT_URL = '/'
