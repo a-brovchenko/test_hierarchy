@@ -11,7 +11,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: hierarchy
+      MYSQL_DATABASE: workers
       MYSQL_PASSWORD: password
 
   # phpmyadmin
