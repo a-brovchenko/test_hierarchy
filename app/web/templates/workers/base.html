@@ -16,19 +16,31 @@
         <div class="container">
             <div class="header-content">
                 <h2>Иерархия сотрудников</h2>
+
             </div>
             <div class="auth-links">
                 {% if not user.is_authenticated %}
-                    <p><a href="/accounts/login/">Вход</a> / <a href="/register/">Регистрация</a></p>
+                <a href="{% url 'login' %}">Вход</a> / <a href="/registration/">Регистрация</a></p>
                 {% else %}
-                    <p>TEST</p>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Выход</button>
+                    </form>
                 {% endif %}
+                <h3>{{ user.username|default:'Guest' }}</h3>
             </div>
         </div>
     </header>
 
 
-        {% block table %}Основное содержимое {% endblock table %}
+    {% block table %}
+
+    <div class="buttons">
+        <button onclick="location.href='workers_tree/'" class="large-button" type="button">Workers tree</button>
+        <button onclick="location.href='workers_info/'" class="large-button" type="button">Workers info</button>
+    </div>
+
+    {% endblock table %}
 
 
     <footer>
@@ -37,3 +49,4 @@
 
 </body>
 </html>
+

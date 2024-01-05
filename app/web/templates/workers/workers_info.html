@@ -1,0 +1,58 @@
+{% extends 'workers/base.html' %}
+
+{% block table %}
+<style>
+    .table-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+    }
+
+    .table {
+        width: 70%; 
+        border-collapse: collapse; 
+    }
+
+    th, td {
+        border: 1px solid #07575b; 
+        padding: 8px; 
+
+    }
+
+    th {
+        background-color: rgb(192, 192, 192);
+    }
+
+    .even-row {
+        background-color: #ffffff; 
+    }
+
+    .odd-row {
+        background-color: rgb(192, 192, 192);
+    }
+</style>
+
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Email</th>
+                <th>Employment Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for worker in workers %}
+            <tr class="{% cycle 'even-row' 'odd-row' %}">
+                <td>{{ worker.name }}</td>
+                <td>{{ worker.position }}</td>
+                <td>{{ worker.email }}</td>
+                <td>{{ worker.employment_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock table %}
