@@ -1,15 +1,26 @@
 {% extends 'workers/base.html' %}
-
+{% csrf_token %}
+{% block menu %}{% endblock menu %}
 {% block content %}
 
 <div class="container">
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by name, position, email, or date of employment">
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-primary" onclick="sortTable()">Search</button>
+        </div>
+    </div>
+
+
     <table class="table table-striped table-bordered table-condensed mx-auto">
         <thead>
-            <tr class="active">
-                <th>Имя</th>
-                <th>Должность</th>
-                <th>Email</th>
-                <th>Дата трудоустройства</th>
+            <tr class="active"> 
+                <th><a class="nav-link" href="#" onclick="sortTable('name')">Name</a></th>
+                <th><a class="nav-link" href="#" onclick="sortTable('position')">Position</a></th>
+                <th><a class="nav-link" href="#" onclick="sortTable('email')">email</a></th>
+                <th><a class="nav-link" href="#" onclick="sortTable('employment_date')">date of employment</a></th>
             </tr>
         </thead>
         <tbody>
@@ -24,5 +35,44 @@
         </tbody>
     </table>
 </div>
+
+<script>
+
+    function sortTable(sortData) {
+        if(!sortData){
+            var sortData = $('#searchInput').val().toLowerCase();
+        }
+        $.ajax({
+            url: '/sort/',
+            type: 'POST',
+            data: {
+                'data': sortData,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+
+            success: function (response) {
+                updateTable(response)
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+    function updateTable(sortedData) {
+        $('tbody').empty(); 
+        console.log(sortedData)
+        $.each(sortedData.workers, function(index, worker) {
+            var row = '<tr>' +
+                        '<td>' + worker.name + '</td>' +
+                        '<td>' + worker.position + '</td>' +
+                        '<td>' + worker.email + '</td>' +
+                        '<td>' + worker.employment_date + '</td>' +
+                      '</tr>';
+            $('tbody').append(row);
+        });
+    }
+
+</script>
 
 {% endblock content %}

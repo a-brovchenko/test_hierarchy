@@ -1,10 +1,16 @@
 {% extends 'workers/base.html' %}
 
-{% block content%}
-<h2>Вход в систему</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Войти</button>
-  </form>
+{% block content %}
+  <div class="container d-flex align-items-center justify-content-center">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Sign in</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock content %}

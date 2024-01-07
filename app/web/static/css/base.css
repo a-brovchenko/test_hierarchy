@@ -1,0 +1,11 @@
+.bg-custom {
+    background-color: #003b46;
+  }
+
+  body{
+      background-color: #96f458;
+  }
+  
+  .card-body{
+      background-color: rgb(41, 179, 133);
+  }

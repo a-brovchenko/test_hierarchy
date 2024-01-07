@@ -3,6 +3,7 @@ from .models import Workers
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.http import JsonResponse
+from django.db.models import Q
 
 def index(request):
     return render(request, 'workers/base.html')
@@ -24,6 +25,20 @@ def load_workers_level(request):
 def workers_info(request):
     workers = Workers.objects.all()
     return render(request, 'workers/workers_info.html', {'workers':workers})
+
+
+def sort_table(request):
+    if request.method == 'POST':
+        data = request.POST.get('data')
+        if data in ('name', 'position', 'email', 'employment_date'):
+            workers = list(Workers.objects.order_by(data).values())
+        else:
+            workers = list(Workers.objects.filter(
+                Q(name=data) |
+                Q(position=data) |
+                Q(email=data) 
+            ).values())
+    return JsonResponse({'workers': workers})
 
 
 def registration(request):
