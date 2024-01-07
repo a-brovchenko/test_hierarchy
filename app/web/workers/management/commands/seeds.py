@@ -35,23 +35,23 @@ class Command(BaseCommand):
 
         boss = Workers.objects.create(name=fake.name(), position='CEO', email=fake.email(), employment_date=fake.date_this_decade(),)
 
-        for q in range(3):
+        for q in range(2):
             child_1 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=boss)
 
-            for w in range(3):
+            for w in range(2):
                 child_2 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=child_1)
 
-                for e in range(3):
+                for e in range(2):
                     child_3 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=child_2)    
 
-                    for r in range(3):
+                    for r in range(2):
                         child_4 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=child_3)  
 
-                        for t in range(3):
+                        for t in range(2):
                             child_5 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=child_4)  
 
-                            for y in range(3):
+                            for y in range(2):
                                 child_6 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=child_5)
                                 
-                                for u in range(3):
+                                for u in range(2):
                                     child_7 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=child_6)

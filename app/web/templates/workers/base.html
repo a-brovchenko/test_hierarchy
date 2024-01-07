@@ -19,7 +19,7 @@
             <a class="navbar-brand" href="/">Hello - {{ user.username|default:'Guest' }} !!!</a>
             <div class="navbar-nav ml-auto">
                 {% if not user.is_authenticated %}
-                    <a class="nav-link" href="accounts/login/">Login</a><a class="nav-link" href="/registration/">Registration</a>
+                    <a class="nav-link" href="/accounts/login/">Login</a><a class="nav-link" href="/registration/">Registration</a>
                 {% else %}
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
