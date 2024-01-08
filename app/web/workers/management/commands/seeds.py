@@ -5,6 +5,8 @@ from django.core.management.base import BaseCommand
 
 class Command(BaseCommand):
     
+    numb = 3
+
     def handle(self, *args, **options):
         fake = Faker()
 
@@ -35,23 +37,23 @@ class Command(BaseCommand):
 
         boss = Workers.objects.create(name=fake.name(), position='CEO', email=fake.email(), employment_date=fake.date_this_decade(),)
 
-        for q in range(2):
+        for q in range(self.numb):
             child_1 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=boss)
 
-            for w in range(2):
+            for w in range(self.numb):
                 child_2 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=child_1)
 
-                for e in range(2):
+                for e in range(self.numb):
                     child_3 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=child_2)    
 
-                    for r in range(2):
+                    for r in range(self.numb):
                         child_4 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=child_3)  
 
-                        for t in range(2):
+                        for t in range(self.numb):
                             child_5 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=child_4)  
 
-                            for y in range(2):
+                            for y in range(self.numb):
                                 child_6 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=child_5)
                                 
-                                for u in range(2):
+                                for u in range(self.numb):
                                     child_7 = Workers.objects.create(name=fake.name(), position=fake.job()[0:20], email=fake.email(), employment_date=fake.date_this_decade(), parent=child_6)

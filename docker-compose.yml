@@ -26,5 +26,17 @@ services:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: password
 
+  # python
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: test_hierarchy
+    networks:
+      default:
+    restart: always
+    ports:
+      - 8000:8000
+
 volumes:
   db_data:
