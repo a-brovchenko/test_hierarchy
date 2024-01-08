@@ -1,0 +1,17 @@
+{% extends 'workers/base.html' %}
+{% csrf_token %}
+{% block menu %}{% endblock menu %}
+
+
+{% block content %}
+    <form method="post" style="max-width: 400px; margin: auto;">
+        <h2>Delete Employee</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div>
+            <label for="name">Employee name:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <button type="submit">Delete</button>
+    </form>
+{% endblock content %}

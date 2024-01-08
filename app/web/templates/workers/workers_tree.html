@@ -1,21 +1,78 @@
 {% extends 'workers/base.html' %}
-{% load static %}
 {% load mptt_tags %}
 
-    {% block table %}
+{% csrf_token %}
+{% block menu %}{% endblock menu %}
 
-    <ul class="root">
-        {% recursetree nodes %}
-            <li>
-                {{ node.name }} - {{node.position}}
-                {% if not node.is_leaf_node %}
-                    <ul class="children">
-                        {{ children }}
-                    </ul>
-                {% endif %}
-            </li>
-        {% endrecursetree %}
-    </ul>
+{% block content %}
+{% recursetree nodes %}
+<li>
+    {{ node.name }} - {{ node.position }}
+    {% if not node.is_leaf_node %}
+        <ul class="children" id="{{node.id}}">
+            {% if node.level < 2 %}
+                {{ children }}
+            {% else %}
+                <li><a href="#" class="lazy-load" data-node-id="{{ node.id }}">Show workers</a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</li>
+{% endrecursetree %}
 
-    {% endblock table %}
+<script>
+
+    function getEvent(){
+        document.querySelectorAll('.lazy-load').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var nodeId = this.getAttribute('data-node-id');
+            loadMore(nodeId);
+            });
+        });
+
+    }
+
+
+    function loadMore(nodeId) {
+        $.ajax({
+        url: '/load_workers_level/',
+        type: 'POST',
+        data: {
+            'data': nodeId,
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+
+        success: function (response) {
+            var targetList = document.getElementById(nodeId);
+            console.log(targetList)
+            var descendantHTML = '';
+            console.log(response)
+            
+            for (var i = 0; i < response.workers.length; i++) {
+                var worker = response.workers[i];
+                if (worker.level < 7){
+                    descendantHTML += `<ul class="children" id="${worker.id}">
+                        ${worker.name} - ${worker.position}
+                        <li><a href="#" class="lazy-load" data-node-id="${worker.id}">Show workers</a></li>
+                        </ul>`;
+                }else{
+                    descendantHTML += `<ul>${worker.name} - ${worker.position}</ul>`;
+                }
+
+            }
+
+            targetList.innerHTML += descendantHTML
+            getEvent()
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+    }
+
+    getEvent()
+</script> 
+{% endblock content %}
+
 

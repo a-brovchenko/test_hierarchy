@@ -1,0 +1,32 @@
+{% extends 'workers/base.html' %}
+{% csrf_token %}
+{% block menu %}{% endblock menu %}
+
+
+{% block content %}
+    <form method="post" style="max-width: 400px; margin: auto;">
+        <h2>Update worker</h2>
+        {% csrf_token %}
+        <div>
+        <label for="name">Employee name:</label>
+        <input type="text" id="name" name="name">
+        </div>
+        <div>
+        <label for="new_name">New name:</label>
+        <input type="text" id="new_name" name="new_name">
+        </div>
+        <div>
+        <label for="new_position">New position:</label>
+        <input type="text" id="new_position" name="new_position">
+        </div>
+        <div>
+        <label for="new_email">New email:</label>
+        <input type="text" id="new_email" name="new_email">
+        </div>
+        <div>
+        <label for="new_employment_date">New employment date:</label>
+        <input type="text" id="new_employment_date" name="new_employment_date">
+        </div>
+        <button type="submit">Update</button>
+    </form>   
+{% endblock content %}
